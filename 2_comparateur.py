@@ -39,7 +39,7 @@ result = pd.DataFrame(columns=df_new.columns)
 for y in IDs_to_extract:
     print(df_new.loc[df_new['ID'] == y])
     new_line = df_new.loc[df_new['ID'] == y]
-    new_line.loc['Date notification Stripe']=date
+    new_line['Date notification Stripe']=date
     result = result.append(new_line)
 del result['Unnamed: 0']
 del result['Unnamed: 0.1']
