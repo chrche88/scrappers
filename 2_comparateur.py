@@ -5,6 +5,7 @@ import os
 import datetime
 import fnmatch
 
+pd.options.mode.chained_assignment = None  # default='warn'
 date = datetime.datetime.today().strftime('%Y-%m-%d')
 
 root = tkinter.Tk()
