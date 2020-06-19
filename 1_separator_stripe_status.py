@@ -1,10 +1,18 @@
 import pandas as pd
 import datetime
 import os, fnmatch
+import tkinter
+import tkinter.filedialog as fd
+
 
 date = datetime.datetime.today().strftime('%Y-%m-%d')
+root = tkinter.Tk()
+root.withdraw()  # use to hide tkinter window
 
-df = pd.read_csv('D:\\Users\\chenchr\\Desktop\\Stage\\aeo_stripe_modified2.csv')
+# currdir = os.getcwd()
+path_to_f = fd.askopenfilename(title='Choisir le fichier à scinder', parent=root,
+                           filetypes=(("Template files", "*.csv"), ("All files", "*")))
+df = pd.read_csv(path_to_f)
 noms_colonnes = df.columns.values
 non_stripe = pd.DataFrame(columns=noms_colonnes)
 stripe = pd.DataFrame(columns=noms_colonnes)

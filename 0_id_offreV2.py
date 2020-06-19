@@ -12,7 +12,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import progress
-
+import datetime
+date = datetime.datetime.today().strftime('%Y-%m-%d')
 
 def diff_list(l1, l2):
     """élément dans l2 et pas dans l1"""
@@ -31,7 +32,7 @@ pd.options.mode.chained_assignment = None  # default='warn'
 # driver = webdriver.Chrome(options=options)
 driver = webdriver.Firefox(firefox_profile=profile)
 
-df = pd.read_csv('D:\\Users\\chenchr\\Desktop\\Stage\\AEO_StripeV2.csv')
+df = pd.read_csv('D:\\Users\\chenchr\\Desktop\\Stage\\18-06AEO_StripeV2.csv')
 time.sleep(2)
 df['ID'] = np.nan
 df['Offre'] = np.nan
@@ -91,25 +92,29 @@ for i in range(len(noms)):
         driver.switch_to.window(tab)
         chaine = liens[i]
         m = re.search('//(.+?)[.]alleatone', chaine)
+        if(m.group(1)=='cha'):
+            input('zknejkanjkeznak')
+        print(m.group(1))
+
         if True:
             try:
 
                 if m:
-                    mot = m.group(1)
-                selecteur = driver.find_element_by_xpath("//a[contains(@href, '" + mot + "')]")
-                parent = selecteur.find_element_by_xpath("..")
-                parent = parent.find_element_by_xpath("..")
-                row = parent.find_elements_by_xpath(".//td")
-                id_rest = row[0].text
-                #### Récup offre
-                plus_info_bouton = row[7].find_element_by_xpath('.//div')
-                driver.execute_script("arguments[0].scrollIntoView();", plus_info_bouton)
-                ActionChains(driver).key_down(Keys.CONTROL).key_down(Keys.SHIFT).click(plus_info_bouton).key_up(
-                    Keys.CONTROL).key_up(Keys.SHIFT).perform()
-                time.sleep(1)
-                temp_tabs = diff_list(all_tabs, driver.window_handles)
-                temp_tab_handle = temp_tabs.pop()
-                driver.switch_to.window(temp_tab_handle)
+                    mot = m.group(1)+'.'
+                    selecteur = driver.find_element_by_xpath("//a[contains(@href, '" + mot + "')]")
+                    parent = selecteur.find_element_by_xpath("..")
+                    parent = parent.find_element_by_xpath("..")
+                    row = parent.find_elements_by_xpath(".//td")
+                    id_rest = row[0].text
+                    #### Récup offre
+                    plus_info_bouton = row[7].find_element_by_xpath('.//div')
+                    driver.execute_script("arguments[0].scrollIntoView();", plus_info_bouton)
+                    ActionChains(driver).key_down(Keys.CONTROL).key_down(Keys.SHIFT).click(plus_info_bouton).key_up(
+                        Keys.CONTROL).key_up(Keys.SHIFT).perform()
+                    time.sleep(1)
+                    temp_tabs = diff_list(all_tabs, driver.window_handles)
+                    temp_tab_handle = temp_tabs.pop()
+                    driver.switch_to.window(temp_tab_handle)
                 try:
                     wait(driver, 120).until(EC.presence_of_element_located((By.NAME, 'plan_id')))
                     plan_selector = Select(driver.find_element_by_name('plan_id'))
@@ -128,7 +133,7 @@ for i in range(len(noms)):
     bar.update(i / len(noms))
     bar.show()
     print('\n')
-df.to_csv('D:\\Users\\chenchr\\Desktop\\Stage\\aeo_stripe_modified2.csv')
+df.to_csv('D:\\Users\\chenchr\\Desktop\\Stage\\'+date+'_aeo_stripe_modified2.csv')
 for tab in all_tabs:
     driver.switch_to.window(tab)
     driver.close()
