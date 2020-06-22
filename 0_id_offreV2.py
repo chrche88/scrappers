@@ -128,7 +128,7 @@ for i in range(len(noms)):
                     plan = plan_selector.first_selected_option.text
                     bar.update(i / len(noms))
                     bar.show()
-                    print("[" + str(i) + "/" + str(nb_etabl) + "]" + noms[i] + ': ' + id_rest + ' ' + plan)
+                    print("[" + str(i+1) + "/" + str(nb_etabl) + "]" + noms[i] + ': ' + id_rest + ' ' + plan)
                     offres.loc[i] = plan
                     ids.loc[i] = id_rest
                     driver.close()
