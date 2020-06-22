@@ -91,6 +91,7 @@ for element in list_pagination:
 time.sleep(4)
 all_tabs = driver.window_handles
 main_window = driver.current_window_handle
+nb_etabl=len(noms)
 print('Chargement des onglets\n')
 for tab in all_tabs:
     driver.switch_to.window(tab)
@@ -125,7 +126,9 @@ for i in range(len(noms)):
                     wait(driver, 120).until(EC.presence_of_element_located((By.NAME, 'plan_id')))
                     plan_selector = Select(driver.find_element_by_name('plan_id'))
                     plan = plan_selector.first_selected_option.text
-                    print(noms[i] + ': ' + id_rest + ' ' + plan)
+                    bar.update(i / len(noms))
+                    bar.show()
+                    print("[" + str(i) + "/" + str(nb_etabl) + "]" + noms[i] + ': ' + id_rest + ' ' + plan)
                     offres.loc[i] = plan
                     ids.loc[i] = id_rest
                     driver.close()
@@ -134,11 +137,7 @@ for i in range(len(noms)):
                     driver.close()
                     break
             except:
-                print()
-
-    bar.update(i / len(noms))
-    bar.show()
-    print('\n')
+                pass
 df.to_csv('D:\\Users\\chenchr\\Desktop\\Stage\\'+date+'_aeo_stripe_modified2.csv')
 for tab in all_tabs:
     driver.switch_to.window(tab)
