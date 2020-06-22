@@ -102,10 +102,6 @@ for i in range(len(noms)):
         driver.switch_to.window(tab)
         chaine = liens[i]
         m = re.search('//(.+?)[.]alleatone', chaine)
-        if(m.group(1)=='cha'):
-            input('zknejkanjkeznak')
-        print(m.group(1))
-
         if True:
             try:
 
