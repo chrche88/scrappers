@@ -13,6 +13,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import progress
 import datetime
+import os, fnmatch
+import tkinter
+import tkinter.filedialog as fd
+
 date = datetime.datetime.today().strftime('%Y-%m-%d')
 
 def diff_list(l1, l2):
@@ -31,8 +35,14 @@ pd.options.mode.chained_assignment = None  # default='warn'
 # options = webdriver.ChromeOptions()
 # driver = webdriver.Chrome(options=options)
 driver = webdriver.Firefox(firefox_profile=profile)
+root = tkinter.Tk()
+root.withdraw()  # use to hide tkinter window
 
-df = pd.read_csv('D:\\Users\\chenchr\\Desktop\\Stage\\18-06AEO_StripeV2.csv')
+# currdir = os.getcwd()
+path_to_f = fd.askopenfilename(title='Choisir le fichier à scinder', parent=root,
+                           filetypes=(("Template files", "*.csv"), ("All files", "*")))
+df = pd.read_csv(path_to_f)
+
 time.sleep(2)
 df['ID'] = np.nan
 df['Offre'] = np.nan
