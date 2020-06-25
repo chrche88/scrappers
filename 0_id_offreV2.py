@@ -7,13 +7,12 @@ import numpy as np
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
-import progress
 import datetime
-import os, fnmatch
 import tkinter
 import tkinter.filedialog as fd
 
@@ -25,7 +24,8 @@ def diff_list(l1, l2):
     s2 = set(l2)
     return s2 - s1
 
-
+options = Options()
+options.headless = True
 profile = FirefoxProfile()
 profile.set_preference("browser.cache.disk.enable", False)
 profile.set_preference("browser.cache.memory.enable", False)
@@ -34,7 +34,7 @@ profile.set_preference("network.http.use-cache", False)
 pd.options.mode.chained_assignment = None  # default='warn'
 # options = webdriver.ChromeOptions()
 # driver = webdriver.Chrome(options=options)
-driver = webdriver.Firefox(firefox_profile=profile)
+driver = webdriver.Firefox(firefox_profile=profile,options=options)
 root = tkinter.Tk()
 root.withdraw()  # use to hide tkinter window
 
