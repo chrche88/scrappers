@@ -25,6 +25,8 @@ df_new = pd.read_csv(new_path)
 
 df_old_inter = df_old[['ID', 'Stripe']]
 df_new_inter = df_new[['ID', 'Stripe']]
+print(df_old_inter)
+print(df_new_inter)
 df_diff = pd.concat([df_old_inter, df_new_inter])
 df_diff = df_diff.reset_index(drop=True)
 df_gpby = df_diff.groupby(list(df_diff.columns))
